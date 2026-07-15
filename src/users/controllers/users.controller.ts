@@ -1,4 +1,12 @@
-import { Controller, Get, Patch, Delete, Body, UseGuards, Request } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Patch,
+  Delete,
+  Body,
+  UseGuards,
+  Request,
+} from "@nestjs/common";
 import { UsersService } from "../services/users.service";
 import { UpdateProfileDto } from "../dto/update-profile.dto";
 import { IUserResponse } from "../interfaces/user.interface";
