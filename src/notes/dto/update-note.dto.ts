@@ -1,6 +1,12 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { CreateNoteDto } from "./create-note.dto";
-import { IsOptional, IsString, IsBoolean, MinLength, MaxLength } from "class-validator";
+import {
+  IsOptional,
+  IsString,
+  IsBoolean,
+  MinLength,
+  MaxLength,
+} from "class-validator";
 
 export class UpdateNoteDto extends PartialType(CreateNoteDto) {
   @IsOptional()

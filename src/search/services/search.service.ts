@@ -17,7 +17,15 @@ export class SearchService {
     userId: string,
     searchDto: SearchDto,
   ): Promise<{ data: INoteResponse[]; total: number }> {
-    const { keyword, folder, tag, pinned, archived, page = 1, limit = 10 } = searchDto;
+    const {
+      keyword,
+      folder,
+      tag,
+      pinned,
+      archived,
+      page = 1,
+      limit = 10,
+    } = searchDto;
 
     const queryBuilder = this.noteRepository
       .createQueryBuilder("note")

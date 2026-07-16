@@ -1,12 +1,7 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 import { UserRepository } from "../repositories/user.repository";
 import { UpdateProfileDto } from "../dto/update-profile.dto";
-import { User } from "../user.entity";
 import { IUserResponse } from "../interfaces/user.interface";
 
 @Injectable()
@@ -19,8 +14,9 @@ export class UsersService {
       throw new NotFoundException("User not found");
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, refreshToken, ...userResponse } = user;
-    return userResponse;
+    return userResponse as IUserResponse;
   }
 
   async updateProfile(
@@ -42,6 +38,7 @@ export class UsersService {
 
     const updatedUser = await this.userRepository.getRepository().save(user);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, refreshToken, ...userResponse } = updatedUser;
     return userResponse;
   }
