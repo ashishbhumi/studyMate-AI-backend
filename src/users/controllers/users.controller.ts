@@ -32,7 +32,7 @@ export class UsersController {
     description: "Profile retrieved successfully",
   })
   async getProfile(@Request() req): Promise<IUserResponse> {
-    return this.usersService.getProfile(req.user.sub);
+    return this.usersService.getProfile(req.user.userId);
   }
 
   @Patch("profile")
@@ -45,13 +45,13 @@ export class UsersController {
     @Request() req,
     @Body() updateProfileDto: UpdateProfileDto,
   ): Promise<IUserResponse> {
-    return this.usersService.updateProfile(req.user.sub, updateProfileDto);
+    return this.usersService.updateProfile(req.user.userId, updateProfileDto);
   }
 
   @Delete()
   @ApiOperation({ summary: "Delete user account" })
   @ApiResponse({ status: 200, description: "User deleted successfully" })
   async deleteUser(@Request() req): Promise<void> {
-    return this.usersService.deleteUser(req.user.sub);
+    return this.usersService.deleteUser(req.user.userId);
   }
 }

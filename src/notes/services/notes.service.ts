@@ -22,7 +22,7 @@ export class NotesService {
   ) {}
 
   async createNote(
-    userId: string,
+    userId: number,
     createNoteDto: CreateNoteDto,
   ): Promise<INoteResponse> {
     if (createNoteDto.folderId) {
@@ -50,12 +50,12 @@ export class NotesService {
   }
 
   async getNotes(
-    userId: string,
+    userId: number,
     page: number = 1,
     limit: number = 10,
     sortBy: string = "createdAt",
     sortOrder: "ASC" | "DESC" = "DESC",
-    filters?: { folderId?: string; isPinned?: boolean; isArchived?: boolean },
+    filters?: { folderId?: number; isPinned?: boolean; isArchived?: boolean },
   ): Promise<{ data: INoteResponse[]; total: number }> {
     return this.noteRepository.findByUserIdWithPagination(
       userId,
@@ -67,7 +67,7 @@ export class NotesService {
     );
   }
 
-  async getNoteById(id: string, userId: string): Promise<INoteResponse> {
+  async getNoteById(id: number, userId: number): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
     if (!note) {
       throw new NotFoundException("Note not found");
@@ -76,8 +76,8 @@ export class NotesService {
   }
 
   async updateNote(
-    id: string,
-    userId: string,
+    id: number,
+    userId: number,
     updateNoteDto: UpdateNoteDto,
   ): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
@@ -102,7 +102,7 @@ export class NotesService {
     return this.noteRepository.findByIdAndUserId(updatedNote.id, userId);
   }
 
-  async deleteNote(id: string, userId: string): Promise<void> {
+  async deleteNote(id: number, userId: number): Promise<void> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
     if (!note) {
       throw new NotFoundException("Note not found");
@@ -111,7 +111,7 @@ export class NotesService {
     await this.noteRepository.getRepository().delete(id);
   }
 
-  async pinNote(id: string, userId: string): Promise<INoteResponse> {
+  async pinNote(id: number, userId: number): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
     if (!note) {
       throw new NotFoundException("Note not found");
@@ -123,7 +123,7 @@ export class NotesService {
     return this.noteRepository.findByIdAndUserId(updatedNote.id, userId);
   }
 
-  async unpinNote(id: string, userId: string): Promise<INoteResponse> {
+  async unpinNote(id: number, userId: number): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
     if (!note) {
       throw new NotFoundException("Note not found");
@@ -135,7 +135,7 @@ export class NotesService {
     return this.noteRepository.findByIdAndUserId(updatedNote.id, userId);
   }
 
-  async archiveNote(id: string, userId: string): Promise<INoteResponse> {
+  async archiveNote(id: number, userId: number): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
     if (!note) {
       throw new NotFoundException("Note not found");
@@ -147,7 +147,7 @@ export class NotesService {
     return this.noteRepository.findByIdAndUserId(updatedNote.id, userId);
   }
 
-  async unarchiveNote(id: string, userId: string): Promise<INoteResponse> {
+  async unarchiveNote(id: number, userId: number): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(id, userId);
     if (!note) {
       throw new NotFoundException("Note not found");
@@ -160,8 +160,8 @@ export class NotesService {
   }
 
   async attachTags(
-    noteId: string,
-    userId: string,
+    noteId: number,
+    userId: number,
     attachTagsDto: AttachTagsDto,
   ): Promise<INoteResponse> {
     const note = await this.noteRepository.findByIdAndUserId(noteId, userId);

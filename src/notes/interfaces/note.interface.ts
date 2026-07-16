@@ -1,12 +1,12 @@
 export interface INote {
-  id: string;
+  id: number;
   title: string;
   content?: string;
   coverImage?: string;
   isPinned: boolean;
   isArchived: boolean;
-  folderId?: string;
-  userId: string;
+  folderId?: number;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,8 +17,8 @@ export interface INoteCreate {
   coverImage?: string;
   isPinned?: boolean;
   isArchived?: boolean;
-  folderId?: string;
-  userId: string;
+  folderId?: number;
+  userId: number;
 }
 
 export interface INoteUpdate {
@@ -27,7 +27,7 @@ export interface INoteUpdate {
   coverImage?: string;
   isPinned?: boolean;
   isArchived?: boolean;
-  folderId?: string;
+  folderId?: number;
 }
 
 export interface INoteResponse extends INote {}

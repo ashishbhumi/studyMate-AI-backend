@@ -14,7 +14,7 @@ export class FoldersService {
   constructor(private folderRepository: FolderRepository) {}
 
   async createFolder(
-    userId: string,
+    userId: number,
     createFolderDto: CreateFolderDto,
   ): Promise<IFolderResponse> {
     const folder = new Folder();
@@ -28,11 +28,11 @@ export class FoldersService {
     return savedFolder;
   }
 
-  async getFolders(userId: string): Promise<IFolderResponse[]> {
+  async getFolders(userId: number): Promise<IFolderResponse[]> {
     return this.folderRepository.findByUserId(userId);
   }
 
-  async getFolderById(id: string, userId: string): Promise<IFolderResponse> {
+  async getFolderById(id: number, userId: number): Promise<IFolderResponse> {
     const folder = await this.folderRepository.findByIdAndUserId(id, userId);
     if (!folder) {
       throw new NotFoundException("Folder not found");
@@ -41,8 +41,8 @@ export class FoldersService {
   }
 
   async updateFolder(
-    id: string,
-    userId: string,
+    id: number,
+    userId: number,
     updateFolderDto: UpdateFolderDto,
   ): Promise<IFolderResponse> {
     const folder = await this.folderRepository.findByIdAndUserId(id, userId);
@@ -61,7 +61,7 @@ export class FoldersService {
     return updatedFolder;
   }
 
-  async deleteFolder(id: string, userId: string): Promise<void> {
+  async deleteFolder(id: number, userId: number): Promise<void> {
     const folder = await this.folderRepository.findByIdAndUserId(id, userId);
     if (!folder) {
       throw new NotFoundException("Folder not found");

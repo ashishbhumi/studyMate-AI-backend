@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 import { UserRepository } from "../repositories/user.repository";
 import { UpdateProfileDto } from "../dto/update-profile.dto";
@@ -9,7 +13,7 @@ import { IUserResponse } from "../interfaces/user.interface";
 export class UsersService {
   constructor(private userRepository: UserRepository) {}
 
-  async getProfile(userId: string): Promise<IUserResponse> {
+  async getProfile(userId: number): Promise<IUserResponse> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new NotFoundException("User not found");
@@ -20,7 +24,7 @@ export class UsersService {
   }
 
   async updateProfile(
-    userId: string,
+    userId: number,
     updateProfileDto: UpdateProfileDto,
   ): Promise<IUserResponse> {
     const user = await this.userRepository.findById(userId);
@@ -42,7 +46,7 @@ export class UsersService {
     return userResponse;
   }
 
-  async deleteUser(userId: string): Promise<void> {
+  async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw new NotFoundException("User not found");

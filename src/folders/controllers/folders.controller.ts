@@ -23,7 +23,7 @@ export class FoldersController {
   @ApiOperation({ summary: "Create a new folder" })
   @ApiResponse({ status: 201, description: "Folder created successfully" })
   async createFolder(
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
     @Body() createFolderDto: CreateFolderDto,
   ): Promise<IFolderResponse> {
     return this.foldersService.createFolder(
@@ -36,7 +36,7 @@ export class FoldersController {
   @ApiOperation({ summary: "Get all folders" })
   @ApiResponse({ status: 200, description: "Folders retrieved successfully" })
   async getFolders(
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<IFolderResponse[]> {
     return this.foldersService.getFolders(userIdentity.userId);
   }
@@ -46,9 +46,9 @@ export class FoldersController {
   @ApiResponse({ status: 200, description: "Folder retrieved successfully" })
   async getFolderById(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<IFolderResponse> {
-    return this.foldersService.getFolderById(id, userIdentity.userId);
+    return this.foldersService.getFolderById(parseInt(id), userIdentity.userId);
   }
 
   @Patch(":id")
@@ -56,11 +56,11 @@ export class FoldersController {
   @ApiResponse({ status: 200, description: "Folder updated successfully" })
   async updateFolder(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
     @Body() updateFolderDto: UpdateFolderDto,
   ): Promise<IFolderResponse> {
     return this.foldersService.updateFolder(
-      id,
+      parseInt(id),
       userIdentity.userId,
       updateFolderDto,
     );
@@ -71,8 +71,8 @@ export class FoldersController {
   @ApiResponse({ status: 200, description: "Folder deleted successfully" })
   async deleteFolder(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<void> {
-    return this.foldersService.deleteFolder(id, userIdentity.userId);
+    return this.foldersService.deleteFolder(parseInt(id), userIdentity.userId);
   }
 }

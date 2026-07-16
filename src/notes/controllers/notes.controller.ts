@@ -25,7 +25,7 @@ export class NotesController {
   @ApiOperation({ summary: "Create a new note" })
   @ApiResponse({ status: 201, description: "Note created successfully" })
   async createNote(
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
     @Body() createNoteDto: CreateNoteDto,
   ): Promise<INoteResponse> {
     return this.notesService.createNote(userIdentity.userId, createNoteDto);
@@ -44,7 +44,7 @@ export class NotesController {
   @ApiQuery({ name: "isArchived", required: false, type: Boolean })
   @ApiResponse({ status: 200, description: "Notes retrieved successfully" })
   async getNotes(
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
     @Query("page") page: string = "1",
     @Query("limit") limit: string = "10",
     @Query("sort") sort: string = "createdAt",
@@ -54,7 +54,7 @@ export class NotesController {
     @Query("isArchived") isArchived?: string,
   ): Promise<{ data: INoteResponse[]; total: number }> {
     const filters: any = {};
-    if (folderId) filters.folderId = folderId;
+    if (folderId) filters.folderId = parseInt(folderId);
     if (isPinned !== undefined) filters.isPinned = isPinned === "true";
     if (isArchived !== undefined) filters.isArchived = isArchived === "true";
 
@@ -73,9 +73,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note retrieved successfully" })
   async getNoteById(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<INoteResponse> {
-    return this.notesService.getNoteById(id, userIdentity.userId);
+    return this.notesService.getNoteById(parseInt(id), userIdentity.userId);
   }
 
   @Patch(":id")
@@ -83,10 +83,14 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note updated successfully" })
   async updateNote(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
     @Body() updateNoteDto: UpdateNoteDto,
   ): Promise<INoteResponse> {
-    return this.notesService.updateNote(id, userIdentity.userId, updateNoteDto);
+    return this.notesService.updateNote(
+      parseInt(id),
+      userIdentity.userId,
+      updateNoteDto,
+    );
   }
 
   @Delete(":id")
@@ -94,9 +98,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note deleted successfully" })
   async deleteNote(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<void> {
-    return this.notesService.deleteNote(id, userIdentity.userId);
+    return this.notesService.deleteNote(parseInt(id), userIdentity.userId);
   }
 
   @Patch(":id/pin")
@@ -104,9 +108,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note pinned successfully" })
   async pinNote(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<INoteResponse> {
-    return this.notesService.pinNote(id, userIdentity.userId);
+    return this.notesService.pinNote(parseInt(id), userIdentity.userId);
   }
 
   @Patch(":id/unpin")
@@ -114,9 +118,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note unpinned successfully" })
   async unpinNote(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<INoteResponse> {
-    return this.notesService.unpinNote(id, userIdentity.userId);
+    return this.notesService.unpinNote(parseInt(id), userIdentity.userId);
   }
 
   @Patch(":id/archive")
@@ -124,9 +128,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note archived successfully" })
   async archiveNote(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<INoteResponse> {
-    return this.notesService.archiveNote(id, userIdentity.userId);
+    return this.notesService.archiveNote(parseInt(id), userIdentity.userId);
   }
 
   @Patch(":id/unarchive")
@@ -134,9 +138,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note unarchived successfully" })
   async unarchiveNote(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
   ): Promise<INoteResponse> {
-    return this.notesService.unarchiveNote(id, userIdentity.userId);
+    return this.notesService.unarchiveNote(parseInt(id), userIdentity.userId);
   }
 
   @Post(":id/tags")
@@ -144,9 +148,13 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Tags attached successfully" })
   async attachTags(
     @Param("id") id: string,
-    @UserIdentity() userIdentity: { userId: string },
+    @UserIdentity() userIdentity: { userId: number },
     @Body() attachTagsDto: AttachTagsDto,
   ): Promise<INoteResponse> {
-    return this.notesService.attachTags(id, userIdentity.userId, attachTagsDto);
+    return this.notesService.attachTags(
+      parseInt(id),
+      userIdentity.userId,
+      attachTagsDto,
+    );
   }
 }

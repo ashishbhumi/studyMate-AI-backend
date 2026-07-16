@@ -96,14 +96,14 @@ export class AuthService {
     };
   }
 
-  async logout(userId: string): Promise<void> {
+  async logout(userId: number): Promise<void> {
     await this.userRepository.clearRefreshToken(userId);
   }
 
   private async generateTokens(
-    userId: string,
+    userId: number,
     email: string,
-  ): Promise<{ accessToken: string; refreshToken: string; userId: string }> {
+  ): Promise<{ accessToken: string; refreshToken: string; userId: number }> {
     const payload = { sub: userId, email };
 
     const accessToken = this.jwtService.sign(payload, {

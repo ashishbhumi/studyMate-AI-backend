@@ -20,7 +20,7 @@ export class UserRepository extends BaseRepository<User> {
     });
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: number): Promise<User | null> {
     return this.repository.findOne({
       where: { id },
     });
@@ -33,13 +33,13 @@ export class UserRepository extends BaseRepository<User> {
   }
 
   async updateRefreshToken(
-    userId: string,
+    userId: number,
     refreshToken: string,
   ): Promise<void> {
     await this.repository.update(userId, { refreshToken });
   }
 
-  async clearRefreshToken(userId: string): Promise<void> {
+  async clearRefreshToken(userId: number): Promise<void> {
     await this.repository.update(userId, { refreshToken: null });
   }
 }
