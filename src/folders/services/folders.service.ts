@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from "@nestjs/common";
 import { FolderRepository } from "../repositories/folder.repository";
 import { CreateFolderDto } from "../dto/create-folder.dto";
 import { UpdateFolderDto } from "../dto/update-folder.dto";
@@ -9,12 +13,17 @@ import { IFolderResponse } from "../interfaces/folder.interface";
 export class FoldersService {
   constructor(private folderRepository: FolderRepository) {}
 
-  async createFolder(userId: string, createFolderDto: CreateFolderDto): Promise<IFolderResponse> {
+  async createFolder(
+    userId: string,
+    createFolderDto: CreateFolderDto,
+  ): Promise<IFolderResponse> {
     const folder = new Folder();
     folder.name = createFolderDto.name;
     folder.userId = userId;
 
-    const savedFolder = await this.folderRepository.getRepository().save(folder);
+    const savedFolder = await this.folderRepository
+      .getRepository()
+      .save(folder);
 
     return savedFolder;
   }
@@ -45,7 +54,9 @@ export class FoldersService {
       folder.name = updateFolderDto.name;
     }
 
-    const updatedFolder = await this.folderRepository.getRepository().save(folder);
+    const updatedFolder = await this.folderRepository
+      .getRepository()
+      .save(folder);
 
     return updatedFolder;
   }

@@ -56,7 +56,12 @@ export class AuthService {
 
     await this.userRepository.updateRefreshToken(user.id, tokens.refreshToken);
 
-    return tokens;
+    return {
+      ...tokens,
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+    };
   }
 
   async refresh(refreshTokenDto: RefreshTokenDto): Promise<AuthResponseDto> {
@@ -83,7 +88,12 @@ export class AuthService {
 
     await this.userRepository.updateRefreshToken(user.id, tokens.refreshToken);
 
-    return tokens;
+    return {
+      ...tokens,
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+    };
   }
 
   async logout(userId: string): Promise<void> {
@@ -93,7 +103,7 @@ export class AuthService {
   private async generateTokens(
     userId: string,
     email: string,
-  ): Promise<AuthResponseDto> {
+  ): Promise<{ accessToken: string; refreshToken: string; userId: string }> {
     const payload = { sub: userId, email };
 
     const accessToken = this.jwtService.sign(payload, {
@@ -109,6 +119,7 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
+      userId,
     };
   }
 }
