@@ -14,14 +14,14 @@ import { ITag } from "./interfaces/tag.interface";
 
 @Entity("tags")
 export class Tag implements ITag {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: "varchar", length: 100 })
   name: string;
 
-  @Column({ type: "uuid" })
-  userId: string;
+  @Column({ type: "int" })
+  userId: number;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;

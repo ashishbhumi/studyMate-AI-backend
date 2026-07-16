@@ -14,14 +14,14 @@ export class FolderRepository extends BaseRepository<Folder> {
     super(repository);
   }
 
-  async findByUserId(userId: string): Promise<Folder[]> {
+  async findByUserId(userId: number): Promise<Folder[]> {
     return this.repository.find({
       where: { userId },
       order: { createdAt: "DESC" },
     });
   }
 
-  async findByIdAndUserId(id: string, userId: string): Promise<Folder | null> {
+  async findByIdAndUserId(id: number, userId: number): Promise<Folder | null> {
     return this.repository.findOne({
       where: { id, userId },
     });

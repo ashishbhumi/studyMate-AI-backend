@@ -1,5 +1,5 @@
 export interface IUser {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password?: string;
@@ -20,4 +20,4 @@ export interface IUserUpdate {
   password?: string;
 }
 
-export interface IUserResponse extends Omit<IUser, 'password'> {}
+export interface IUserResponse extends Omit<IUser, "password"> {}

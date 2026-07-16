@@ -13,8 +13,8 @@ import {
 
 @Entity("users")
 export class User implements IUser {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: "varchar", length: 255 })
   name: string;

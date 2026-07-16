@@ -12,11 +12,52 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ["error", "warn", "log", "debug", "verbose"],
   });
+  const allowedOrigins = ["http://localhost:5003"];
 
-  // CORS
+  // IMPORTANT: Use function origin to echo allowed origin (required when credentials: true)
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: (origin, callback) => {
+      // Allow requests with no origin (curl, mobile apps, Postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        // echo the origin back
+        return callback(null, true);
+      }
+
+      // In non-production, optionally allow all local origins (still echoes)
+      if (
+        process.env.NODE_ENV !== "production" &&
+        process.env.ENVIRONMENT !== "PRODUCTION"
+      ) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "Accept",
+      "Origin",
+      "Access-Control-Request-Method",
+      "Access-Control-Request-Headers",
+      "userid",
+    ],
+    exposedHeaders: ["Authorization"],
     credentials: true,
+    preflightContinue: false,
+    // For legacy browsers sometimes 204 causes problems, 200 is safe too
+    optionsSuccessStatus: 204,
+  });
+
+  // Optional: ensure Express returns something for OPTIONS if any middleware blocks it
+  // (Nest + enableCors should be enough, but this is a safe fallback)
+  const expressApp = app.getHttpAdapter().getInstance();
+  expressApp.options("*", (req, res) => {
+    res.sendStatus(200);
   });
 
   // Swagger

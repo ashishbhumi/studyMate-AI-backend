@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { FolderRepository } from "../repositories/folder.repository";
 import { CreateFolderDto } from "../dto/create-folder.dto";
 import { UpdateFolderDto } from "../dto/update-folder.dto";
@@ -9,21 +9,26 @@ import { IFolderResponse } from "../interfaces/folder.interface";
 export class FoldersService {
   constructor(private folderRepository: FolderRepository) {}
 
-  async createFolder(userId: string, createFolderDto: CreateFolderDto): Promise<IFolderResponse> {
+  async createFolder(
+    userId: number,
+    createFolderDto: CreateFolderDto,
+  ): Promise<IFolderResponse> {
     const folder = new Folder();
     folder.name = createFolderDto.name;
     folder.userId = userId;
 
-    const savedFolder = await this.folderRepository.getRepository().save(folder);
+    const savedFolder = await this.folderRepository
+      .getRepository()
+      .save(folder);
 
     return savedFolder;
   }
 
-  async getFolders(userId: string): Promise<IFolderResponse[]> {
+  async getFolders(userId: number): Promise<IFolderResponse[]> {
     return this.folderRepository.findByUserId(userId);
   }
 
-  async getFolderById(id: string, userId: string): Promise<IFolderResponse> {
+  async getFolderById(id: number, userId: number): Promise<IFolderResponse> {
     const folder = await this.folderRepository.findByIdAndUserId(id, userId);
     if (!folder) {
       throw new NotFoundException("Folder not found");
@@ -32,8 +37,8 @@ export class FoldersService {
   }
 
   async updateFolder(
-    id: string,
-    userId: string,
+    id: number,
+    userId: number,
     updateFolderDto: UpdateFolderDto,
   ): Promise<IFolderResponse> {
     const folder = await this.folderRepository.findByIdAndUserId(id, userId);
@@ -45,12 +50,14 @@ export class FoldersService {
       folder.name = updateFolderDto.name;
     }
 
-    const updatedFolder = await this.folderRepository.getRepository().save(folder);
+    const updatedFolder = await this.folderRepository
+      .getRepository()
+      .save(folder);
 
     return updatedFolder;
   }
 
-  async deleteFolder(id: string, userId: string): Promise<void> {
+  async deleteFolder(id: number, userId: number): Promise<void> {
     const folder = await this.folderRepository.findByIdAndUserId(id, userId);
     if (!folder) {
       throw new NotFoundException("Folder not found");

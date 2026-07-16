@@ -9,7 +9,10 @@ import { ITagResponse } from "../interfaces/tag.interface";
 export class TagsService {
   constructor(private tagRepository: TagRepository) {}
 
-  async createTag(userId: string, createTagDto: CreateTagDto): Promise<ITagResponse> {
+  async createTag(
+    userId: number,
+    createTagDto: CreateTagDto,
+  ): Promise<ITagResponse> {
     const tag = new Tag();
     tag.name = createTagDto.name;
     tag.userId = userId;
@@ -19,11 +22,11 @@ export class TagsService {
     return savedTag;
   }
 
-  async getTags(userId: string): Promise<ITagResponse[]> {
+  async getTags(userId: number): Promise<ITagResponse[]> {
     return this.tagRepository.findByUserId(userId);
   }
 
-  async getTagById(id: string, userId: string): Promise<ITagResponse> {
+  async getTagById(id: number, userId: number): Promise<ITagResponse> {
     const tag = await this.tagRepository.findByIdAndUserId(id, userId);
     if (!tag) {
       throw new NotFoundException("Tag not found");
@@ -32,8 +35,8 @@ export class TagsService {
   }
 
   async updateTag(
-    id: string,
-    userId: string,
+    id: number,
+    userId: number,
     updateTagDto: UpdateTagDto,
   ): Promise<ITagResponse> {
     const tag = await this.tagRepository.findByIdAndUserId(id, userId);
@@ -50,7 +53,7 @@ export class TagsService {
     return updatedTag;
   }
 
-  async deleteTag(id: string, userId: string): Promise<void> {
+  async deleteTag(id: number, userId: number): Promise<void> {
     const tag = await this.tagRepository.findByIdAndUserId(id, userId);
     if (!tag) {
       throw new NotFoundException("Tag not found");

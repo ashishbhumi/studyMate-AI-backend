@@ -14,7 +14,7 @@ export class NoteRepository extends BaseRepository<Note> {
     super(repository);
   }
 
-  async findByUserId(userId: string): Promise<Note[]> {
+  async findByUserId(userId: number): Promise<Note[]> {
     return this.repository.find({
       where: { userId },
       relations: ["folder", "tags"],
@@ -22,7 +22,7 @@ export class NoteRepository extends BaseRepository<Note> {
     });
   }
 
-  async findByIdAndUserId(id: string, userId: string): Promise<Note | null> {
+  async findByIdAndUserId(id: number, userId: number): Promise<Note | null> {
     return this.repository.findOne({
       where: { id, userId },
       relations: ["folder", "tags"],
@@ -30,12 +30,12 @@ export class NoteRepository extends BaseRepository<Note> {
   }
 
   async findByUserIdWithPagination(
-    userId: string,
+    userId: number,
     page: number,
     limit: number,
     sortBy: string = "createdAt",
     sortOrder: "ASC" | "DESC" = "DESC",
-    filters?: { folderId?: string; isPinned?: boolean; isArchived?: boolean },
+    filters?: { folderId?: number; isPinned?: boolean; isArchived?: boolean },
   ): Promise<{ data: Note[]; total: number }> {
     const skip = (page - 1) * limit;
 

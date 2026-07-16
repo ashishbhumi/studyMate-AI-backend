@@ -14,14 +14,14 @@ import { IFolder } from "./interfaces/folder.interface";
 
 @Entity("folders")
 export class Folder implements IFolder {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: "varchar", length: 255 })
   name: string;
 
-  @Column({ type: "uuid" })
-  userId: string;
+  @Column({ type: "int" })
+  userId: number;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;

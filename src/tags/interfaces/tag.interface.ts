@@ -1,14 +1,14 @@
 export interface ITag {
-  id: string;
+  id: number;
   name: string;
-  userId: string;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface ITagCreate {
   name: string;
-  userId: string;
+  userId: number;
 }
 
 export interface ITagUpdate {
