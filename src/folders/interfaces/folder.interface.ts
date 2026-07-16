@@ -1,14 +1,14 @@
 export interface IFolder {
-  id: string;
+  id: number;
   name: string;
-  userId: string;
+  userId: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface IFolderCreate {
   name: string;
-  userId: string;
+  userId: number;
 }
 
 export interface IFolderUpdate {

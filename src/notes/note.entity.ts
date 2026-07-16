@@ -16,8 +16,8 @@ import { INote } from "./interfaces/note.interface";
 
 @Entity("notes")
 export class Note implements INote {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: "varchar", length: 500 })
   title: string;
@@ -34,11 +34,11 @@ export class Note implements INote {
   @Column({ type: "boolean", default: false })
   isArchived: boolean;
 
-  @Column({ type: "uuid", nullable: true })
-  folderId: string;
+  @Column({ type: "int", nullable: true })
+  folderId: number;
 
-  @Column({ type: "uuid" })
-  userId: string;
+  @Column({ type: "int" })
+  userId: number;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;

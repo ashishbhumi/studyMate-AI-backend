@@ -1,9 +1,9 @@
 import {
   IsNotEmpty,
   IsString,
-  IsUUID,
   IsOptional,
   IsBoolean,
+  IsNumber,
   MinLength,
   MaxLength,
 } from "class-validator";
@@ -32,6 +32,6 @@ export class CreateNoteDto {
   isArchived?: boolean;
 
   @IsOptional()
-  @IsUUID()
-  folderId?: string;
+  @IsNumber()
+  folderId?: number;
 }
