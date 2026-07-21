@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ["error", "warn", "log", "debug", "verbose"],
   });
-  const allowedOrigins = ["http://localhost:5003"];
+  const allowedOrigins = ["http://localhost:5003", "http://localhost:5003/"];
 
   // IMPORTANT: Use function origin to echo allowed origin (required when credentials: true)
   app.enableCors({
@@ -44,7 +44,7 @@ async function bootstrap() {
       "Origin",
       "Access-Control-Request-Method",
       "Access-Control-Request-Headers",
-      "userid",
+      "user-id",
     ],
     exposedHeaders: ["Authorization"],
     credentials: true,

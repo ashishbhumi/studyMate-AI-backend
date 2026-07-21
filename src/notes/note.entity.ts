@@ -25,6 +25,9 @@ export class Note implements INote {
   @Column({ type: "text", nullable: true })
   content: string;
 
+  @Column({ type: "text", nullable: true })
+  summary: string;
+
   @Column({ type: "varchar", length: 500, nullable: true })
   coverImage: string;
 

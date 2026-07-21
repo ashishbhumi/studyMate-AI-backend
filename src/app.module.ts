@@ -10,6 +10,7 @@ import { FoldersModule } from "./folders/folders.module";
 import { TagsModule } from "./tags/tags.module";
 import { NotesModule } from "./notes/notes.module";
 import { SearchModule } from "./search/search.module";
+import { AiModule } from "./ai/ai.module";
 import { UserHeaderInterceptor } from "./common/interceptors/user-header.interceptor";
 
 @Module({
@@ -25,6 +26,7 @@ import { UserHeaderInterceptor } from "./common/interceptors/user-header.interce
     TagsModule,
     NotesModule,
     SearchModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [
