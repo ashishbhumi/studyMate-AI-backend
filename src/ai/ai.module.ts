@@ -8,5 +8,6 @@ import { NotesModule } from "../notes/notes.module";
   imports: [HttpModule, NotesModule],
   controllers: [AiController],
   providers: [AiService],
+  exports: [AiService],
 })
 export class AiModule {}

@@ -12,6 +12,7 @@ import { NotesModule } from "./notes/notes.module";
 import { SearchModule } from "./search/search.module";
 import { AiModule } from "./ai/ai.module";
 import { UserHeaderInterceptor } from "./common/interceptors/user-header.interceptor";
+import { FlashcardsModule } from "./flashcards/flashcards.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserHeaderInterceptor } from "./common/interceptors/user-header.interce
     NotesModule,
     SearchModule,
     AiModule,
+    FlashcardsModule,
   ],
   controllers: [AppController],
   providers: [
