@@ -2,6 +2,7 @@ export interface INote {
   id: number;
   title: string;
   content?: string;
+  summary?: string;
   coverImage?: string;
   isPinned: boolean;
   isArchived: boolean;
